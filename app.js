@@ -9,7 +9,7 @@ const app = express();
 
 // Verbindung zur Datenbank herstellen
 mongoose.Promose = global.Promise;
-mongoose.connect('mongodb://localhost:27017/sandbox2');
+mongoose.connect('mongodb://heroku_jtj9mgwt:rcvs815upbfcvujccf04pahgah@ds161022.mlab.com:61022/heroku_jtj9mgwt');
 const db = mongoose.connection;
 
 db.on('error', err => {

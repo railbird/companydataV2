@@ -1,4 +1,4 @@
-var url = "http://localhost:3000/api";
+var url = "https://gewinnzahlen.herokuapp.com/api";
 
 // Chart by plotly.by
 var trace1 = {

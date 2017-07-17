@@ -26,15 +26,19 @@ $('#searchButton').click(function() {
     $('#chart').text("");
     if (firmenname) {
         sendRequest(firmenname);
+    } else {
+        $('#chartTitle').text("Bitte geben Sie einen Firmennamen an.");
     }
 });
 
 $('#deepButton').click(function() {
-    var firmenname = $('#firmenname').val() + "&mode=force";
+    var firmenname = $('#firmenname').val();
     $('.list-group').text("");
     $('#chart').text("");
     if (firmenname) {
-        sendRequest(firmenname);
+        sendRequest(firmenname + "&mode=force");
+    } else {
+        $('#chartTitle').text("Bitte geben Sie einen Firmennamen an.");
     }
 });
 

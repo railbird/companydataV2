@@ -1,4 +1,5 @@
 const db = require('./../models');
+const path = require('path');
 
 const companyController = {};
 
@@ -51,8 +52,9 @@ companyController.get = (req, res, next) => {
     }
     return next();
   }
+  // Falls kein Firmenname als Parameter angegeben wurde, sende Benutzeranweisung der API
   if(!req.query.name || req.query.name.length < 2) {
-    return res.status(400).json({error: "Bitte Firmennamen als Parameter 'name' angeben."});
+    return res.status(200).sendFile(path.join(__dirname + "./../public/api.html"));
   }
   // suche in lokaler db. Wurde die Firma gefunden, werden die Daten als response gesendet, ansonsten wird nach neuen Daten gescraped.
   let companyNameShort = req.query.name.slice(0, 40);

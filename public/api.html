@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>Gewinn / Bilanzsumme microservice</title>
+        <link rel="stylesheet" href="/css/bootstrap.css">
+    </head>
+    <body>
+        <div class="container">
+            <h2 class="header pb-3">
+                API
+                <small class="text-muted">Gewinn / Bilanzsumme / Umsatz Microservice</small>
+            </h2>
+            <blockquote>
+                <ul>1) Anfrage an /api?name=[Firmenname] gibt Gewinn und Bilanzsumme des Unternehmens für jedes Jahr, in dem Unternehmenszahlen veröffentlicht wurden, aus.
+                Außerdem werden veröffentlichte Ereignisse der Unternehmensgeschichte nach Datum sortiert ausgegeben.</ul>
+                <ul>2) Ist die Suchanfrage nicht eindeutig, d.h. es kommt mehr als ein Unternehmen in Frage, so wird eine Liste an Auswahlmöglichkeiten (Unternehmensnamen
+                mit dazugehörigen, eindeutigen HRB Nummern) ausgegeben. Es ist dann möglich eine erneute Suchanfrage zu senden, optional mit der eindeutigen HRB Nummer des Unternehmens.
+                Diese kann als Query - Parameter hrb=[HRB-Nummer] angegeben werden.</ul>
+                <ul>3) Es kann optional der Parameter mode=force angegeben werden, um den lokalen Datenbank Lookup der API zu überspringen und die Datenbeschaffung aus externer Quelle
+                zu forcieren.</ul>
+                <ul>4) Parameterlose Anfrage an /api/allbyname gibt eine Liste aller Unternehmen, die in der Datenbank gespeichert sind aus.</ul>
+                <ul>5) /api/all Gibt den gesamten Inhalt der Datenbank aus.</ul>
+            </blockquote>
+            <h4 class="pt-4">Beispielanfrage:</h4>
+            <p>
+              <code>https://gewinnzahlen.herokuapp.com/api?name=elunic media</code>
+              <br>
+              Gibt Unternehmenskennzahlen zu elunic gmbh aus.
+            </p>
+            <p>
+              <code>https://gewinnzahlen.herokuapp.com/api?name=elunic&mode=force</code><br>
+              Die Suchanfrage ist ungenau, es gibt mehr als ein Unternehmen mit dem Namen "elunic". Der Output ist:
+              <br>
+              <code>
+                    {
+                        "message": "Bitte Firmenname praezisieren oder mit hrb=[HRB Nummer] suchen",
+                        "companies": [
+                        {
+                          "name": "elunic GmbH, München",
+                          "hrb": 176778
+                        },
+                        {
+                          "name": "elunic Systems GmbH, München",
+                          "hrb": 207683
+                        }
+                        ]
+                      }
+              </code>
+            </p>
+            <p>
+              <code>https://gewinnzahlen.herokuapp.com/api?name=elunic&hrb=207683</code>
+              <br>
+              Das ist die HRB Nummer der elunic Systems GmbH. Da bisher keine Unternehmenskennzahlen veröffentlicht wurden, ist die Ausgabe:
+              <br>
+              <code>
+                  {
+                    "error": "elunic Systems GmbH, München hat bisher keine Unternehmenszahlen veröffentlicht."
+                  }
+              </code>
+          </p>
+        </div>
+    </body>
+</html>
